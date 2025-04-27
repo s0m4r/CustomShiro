@@ -127,9 +127,9 @@ public class ShiroController {
         // 设置
         this.initToolbar();
 
-        InetSocketAddress proxyAddr = new InetSocketAddress("127.0.0.1", 8083);
-        proxySettingInfo.put("proxy", new Proxy(Proxy.Type.HTTP, proxyAddr));
-        urlInput.setText("http://127.0.0.1:8080/");
+        // InetSocketAddress proxyAddr = new InetSocketAddress("127.0.0.1", 8083);
+        // proxySettingInfo.put("proxy", new Proxy(Proxy.Type.HTTP, proxyAddr));
+        // urlInput.setText("http://127.0.0.1:8080/");
         // System.out.println(CustomLoader.loaderCodeWithSecondWay);
     }
 
