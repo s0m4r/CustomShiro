@@ -3,9 +3,6 @@ package com.sma11new.exp.shiro.attack.shell;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Field;
-import java.net.URL;
-import java.net.URLClassLoader;
-
 public class SingleSpringEcho {
 
     public SingleSpringEcho() {

