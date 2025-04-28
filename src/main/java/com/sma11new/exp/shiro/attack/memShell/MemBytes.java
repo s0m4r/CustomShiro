@@ -46,11 +46,13 @@ public class MemBytes {
         MEM_MAP.put("Suo5[Filter]", "Suo5Filter");
         MEM_MAP.put("Suo5[Valve]", "Suo5Valve");
         MEM_MAP.put("Suo5[Listener]", "Suo5Listener");
-        
+
         MEM_MAP.put("ChangeShiroKey[Filter]","ChangeShiroKeyFilter");
         MEM_MAP.put("ChangeShiroKey[Filter2]","ChangeShiroKeyFilter2");
 
         MEM_MAP.put("命令执行[Filter]", "CommandExecFilter");
+        MEM_MAP.put("动态类加载[Filter]","ClassLoaderFilter");
+        MEM_MAP.put("动态类加载[Servlet]", "ClassLoaderServlet");
         
         MEM_MAP.put("BastionFilter","BastionFilter");
         MEM_MAP.put("BastionEncryptFilter","BastionEncryptFilter");
@@ -109,6 +111,10 @@ public class MemBytes {
                 clazz = pool.get(AddDllFilter.class.getName());
             } else if (value.equals("CommandExecFilter")) {
                 clazz = pool.get(CommandExecFilter.class.getName());
+            } else if (value.equals("ClassLoaderFilter")) {
+                clazz = pool.get(ClassLoaderFilter.class.getName());
+            } else if (value.equals("ClassLoaderServlet")) {
+                clazz = pool.get(ClassLoaderServlet.class.getName());
             }
 
             assert clazz != null;

@@ -37,7 +37,10 @@ public class Gadgets {
     }
 
     public static Object createTemplatesImpl(String classpayload) throws Exception {
-        return Boolean.parseBoolean(System.getProperty("properXalan", "false")) ? Gadgets.createTemplatesImpl(classpayload, Class.forName("org.apache.xalan.xsltc.trax.TemplatesImpl"), Class.forName("org.apache.xalan.xsltc.runtime.AbstractTranslet")) : Gadgets.createTemplatesImpl(classpayload, TemplatesImpl.class, AbstractTranslet.class);
+        return Boolean.parseBoolean(
+                System.getProperty("properXalan", "false"))
+                ? Gadgets.createTemplatesImpl(classpayload, Class.forName("org.apache.xalan.xsltc.trax.TemplatesImpl"), Class.forName("org.apache.xalan.xsltc.runtime.AbstractTranslet"))
+                : Gadgets.createTemplatesImpl(classpayload, TemplatesImpl.class, AbstractTranslet.class);
     }
 
     public static <T> T createTemplatesImpl(String payload, Class<T> tplClass, Class<?> abstTranslet) throws Exception {

